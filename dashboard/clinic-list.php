@@ -115,22 +115,32 @@ $result = $conn->query($sql);
                   </thead>
                   <tbody>
                   <?php 
-        if ($result->num_rows > 0) {
-            // Loop pelos resultados
-            while($row = $result->fetch_assoc()) {?>
-                  <tr>
-                    <td><a href="clinic-view?id=<?php echo $row['clinic_id'] ?>"><?php echo $row['clinic_name'] ?></a></td>
-                    <td><?php echo $row['clinic_schema'] ?></td>
-                    <td><?php if($row['clinic_status'] == 1){ ?>
-                        Ativo
-                      <?php }else{?>
-                        Inativo
-                      <?php } ?></td>
-                    <td><?php echo $row['clinic_user'] ?></td>
-                    <td><?php echo $row['clinic_pass'] ?></td>
+              if ($result->num_rows > 0) {
+                  // Loop pelos resultados
+                  while($row = $result->fetch_assoc()) {
+              ?>
+                      <tr>
+                          <?php if($_SESSION['level'] == 2){ ?>
+                              <td><?php echo $row['clinic_name'] ?></td>
+                          <?php } else { ?>
+                              <td><a href="clinic-view?id=<?php echo $row['clinic_id'] ?>"><?php echo $row['clinic_name'] ?></a></td>
+                          <?php } ?>
 
-                  </tr>
-                  <?php } }?>
+                          <td><?php echo $row['clinic_schema'] ?></td>
+                          <td><?php if($row['clinic_status'] == 1){ ?>
+                                  Ativo
+                              <?php } else { ?>
+                                  Inativo
+                              <?php } ?>
+                          </td>
+                          <td><?php echo $row['clinic_user'] ?></td>
+                          <td><?php echo $row['clinic_pass'] ?></td>
+                      </tr>
+              <?php
+                  }
+              }
+              ?>
+
                   </tbody>
                 </table>
               </div>

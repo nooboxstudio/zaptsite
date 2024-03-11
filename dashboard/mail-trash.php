@@ -88,10 +88,18 @@ $result = $conn->query($sql);
             <h2 class="m-0">Lixo Eletrônico</h2>
           </div><!-- /.col -->
           <div class="col-sm-6 text-right">
+          <?php if($_SESSION['level'] == 2){ ?>
+            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-md" disabled>
+                <i class="far fa-trash-alt"></i>
+                Esvaziar
+            </button>
+        <?php } else { ?>
             <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-md">
                 <i class="far fa-trash-alt"></i>
                 Esvaziar
             </button>
+        <?php } ?>
+
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
@@ -120,7 +128,7 @@ $result = $conn->query($sql);
         </div>
         <!-- /.modal-dialog -->
       </div>
-      <!--########## FIM MODAL DE CCONFIRMAÇÃO DE EXCLUSÃO ######### -->s
+      <!--########## FIM MODAL DE CCONFIRMAÇÃO DE EXCLUSÃO ######### -->
 
     <!-- Main content -->
     <div class="content">
