@@ -28,8 +28,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     // Verificar se o usuário foi encontrado
     if ($result->num_rows > 0) {
+        $users = $result->fetch_assoc();
         // Iniciar a sessão e armazenar o nome de usuário na variável de sessão
         $_SESSION['username'] = $username;
+        $_SESSION['level'] = $users['level'];
+        $_SESSION['name'] = $users['name'];
 
         // Redirecionar para a página inicial
         header("Location: ./");
@@ -47,12 +50,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Dashboard | Zapt System</title>
     <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/login.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="dist/css/login.css">
 </head>
 <body class="text-center">
         <form class="form-signin border rounded shadow-lg" action="login.php" method="post">
-            <img class="mb-4 rounded mx-auto d-block" src="img/favicon.png" alt="logo zapt" width="72" height="72">
+            <img class="mb-4 rounded mx-auto d-block" src="dist/img/favicon.png" alt="logo zapt" width="72" height="72">
             <h1 class="h3 mb-3 font-weight-normal">Dashboard</h1>
             <label for="username" class="sr-only">Usuário</label>
             <input type="text" id="username" name="username" class="form-control" placeholder="usuário" required autofocus>

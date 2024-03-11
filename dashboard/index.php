@@ -19,122 +19,186 @@ $result = $conn->query($sql);
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Zapt System</title>
-    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard V2 | Zapt System</title>
 
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- IonIcons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="dist/img/favicon.png" type="image/x-icon">
 
-    <!-- jQuery CDN -->
-    <script src="js/jquery-3.7.1.js"></script>
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
 
-    <!-- DataTables CDN -->
-    <link rel="stylesheet" type="text/css" href="css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js"></script>
-    
 </head>
-</head>
-    
-</head>
-<body class="w-full h-auto">
-<main>
-    <header class="w-full bg-gray-800 text-white p-2 flex gap-4 content-center place-items-center">
-        <img src="img/favicon.png" alt="" class="w-12 y-12">
-        <span class="font-semibold text-xl "><a href="./">Zapt System</a></span>
+<!--
+`body` tag options:
 
-        <?php include_once("parts/menu.php")?>
-    </header>
-    
-    <section id="content-wrap" class="p-4 w-full dataTable table-auto">
-        
-        <div class="flex w-full h-5 p-5 mb-10 -mt-5 gap-10">
-            <!-- barra superior-->
+  Apply one or more of the following classes to to the body tag
+  to get the desired effect
 
-        <span><a href="./" class="p-3 bg-blue-400 text-white rounded-lg flex items-center gap-2">Caixa Entrada</a></span>
-        <span>
-            <a href="trash" class="p-3 bg-red-600 text-white rounded-lg flex items-center gap-2 hover:bg-red-400 ">
-                Lixeira
-            </a>
-        </span>
-            
-        </div>
-        <hr class="mb-3">
-    <table class="w-full border-spacing-2 text-center" id="emails">
-    <thead>
-        <tr class="text-gray-700 font-semibold">
-            <th>E-mail</th>
-            <th>Empresa</th>
-            <th>Data</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php 
+  * sidebar-collapse
+  * sidebar-mini
+-->
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+  <!-- Navbar -->
+  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <!-- Left navbar links -->
+    <?php include_once('structure/topbar.php') ?>
+  </nav>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="./" class="brand-link">
+      <img src="dist/img/favicon.png" alt="Zapt Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+      <span class="brand-text font-weight-light">Zapt System</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <?php include_once("structure/sidebar.php") ?>
+      </nav>
+      <!-- /.sidebar-menu -->
+
+
+    </div>
+    <!-- /.sidebar -->
+  </aside>
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1 class="m-0">Contato via Site</h1>
+          </div><!-- /.col -->
+          <div class="col-sm-6 text-right">
+  
+          </div><!-- /.col -->
+        </div><!-- /.row -->
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <div class="content">
+      <div class="container-fluid">
+          <div class="card">
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="emails" class="table table-bordered table-striped">
+                  <thead>
+                  <tr>
+                    <th>E-mail</th>
+                    <th>Empresa</th>
+                    <th>Data</th>
+                    <th> &nbsp; </th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <?php 
         if ($result->num_rows > 0) {
             // Loop pelos resultados
             while($row = $result->fetch_assoc()) {?>
-            
-            <tr <?php if($row['is_read'] == 0){ ?>
-                class="text-gray-700 font-semibold"
+                  <tr <?php if($row['is_read'] == 0){ ?>
+                class="text-bold"
             <?php } else{ ?>
-                class="text-gray-600 font-flat"
+                class="text-flat"
             <?php } ?> >
-                <td><a class="text-blue-600" href="mail_view?id=<?php echo $row['mail_id'] ?>"><?php echo $row['mail_email'] ?></a></td>
+                <td><a class="text-blue-600" href="mail-view?id=<?php echo $row['mail_id'] ?>"><?php echo $row['mail_email'] ?></a></td>
                 <td><?php echo $row['mail_company'] ?></td>
                 <td><?php 
                 $dataFormatada = date('d/m/Y H:i', strtotime($row['date_in']));
                 echo $dataFormatada ?></td>
-                <td class="flex gap-2">
-                    <a href="settrash?id=<?php echo $row['mail_id'] ?>">
-                    <img 
-                        src="img/trashin.png" 
-                        alt="Excluir" 
-                        title="Excluir"
-                        class="opacity-50 h-6"
-                    >
-                </a>
-                <?php if($row['is_read'] == 1){
-                ?>
-                <a href="setunread?id=<?php echo $row['mail_id'] ?>">
-                    <img 
-                        src="img/mail.png" 
-                        alt="Marcar como não lido" 
-                        title="Marcar como não lido"
-                        class="opacity-50 h-6"
-                    >
-                </a>
-                <?php
-                    }else{?>
-                    <img 
-                        src="img/mail.png" 
-                        alt="Marcar como não lido" 
-                        title="Marcar como não lido"
-                        class="opacity-25 h-6 cursor-pointer"
-                    >
+                    <td class="text-center">
+                    <?php if($row['is_read'] == 1){
+                      ?>
+                      <a href="mail/set-unread?id=<?php echo $row['mail_id'] ?>" class="btn btn-light" title="Marcar como Não Lida">
+                        <i class="fa fa-envelope"></i>
+                      </a> &nbsp;
+                      <?php
+                    }else{ ?>
+                        <a href="mail/set-unread?id=<?php echo $row['mail_id'] ?>" class="btn btn-light disabled" title="Marcar como Não Lida">
+                        <i class="fa fa-envelope"></i>
+                      </a> &nbsp;
+                  <?php }  ?>
+                      <a href="mail/send-to-trash?id=<?php echo $row['mail_id'] ?>" class="btn btn-light" title="Mover para a Lixeira">
+                        <i class="fa fa-trash"></i>
+                      </a>
+                    </td>
+                  </tr>
+                  <?php } }?>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+          
+      </div>
+      <!-- /.container-fluid -->
+    </div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
 
-                    <?php }
-                ?>
-            </td>
-    
-            </tr>
-            <?php }
-                } else {?>
-            <tr class="text-gray-600 font-flat">
-            <td></td>
-            <td>Nenhum Registro Encontrado</td>
-            <td></td>
-        </tr>
-        <?php }
-        ?>
-    </tbody>
-    </table>
-    </section>
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
 
-    <script>
-  $(document).ready(function () {
-    $('#emails').DataTable({
+  <!-- Main Footer -->
+  <?php include_once("structure/footer.php") ?>
+</div>
+<!-- ./wrapper -->
+
+<!-- REQUIRED SCRIPTS -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE -->
+<script src="dist/js/adminlte.js"></script>
+
+<!-- OPTIONAL SCRIPTS -->
+<script src="plugins/chart.js/Chart.min.js"></script>
+
+<!-- DataTables  & Plugins -->
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+  $(function () {
+    $("#emails").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
       "language": {
         "sEmptyTable":     "Nenhum registro encontrado",
         "sInfo":           "Mostrando de _START_ até _END_ de _TOTAL_ registros",
@@ -164,13 +228,12 @@ $result = $conn->query($sql);
             "orderData": [2], // Índice da coluna de dados para ordenação
             "orderSequence": ["desc", "asc"] // Ordem descendente seguida por ascendente
         }],
-    });
+      
+    }).buttons().container().appendTo('#emails_wrapper .col-md-6:eq(0)');
   });
 </script>
 
-    
-    
 
-</main>
+
 </body>
 </html>
